@@ -1,0 +1,6 @@
+@RegistroCitas.Server_HostAddress = http://localhost:5227
+
+GET {{RegistroCitas.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
