@@ -17,5 +17,7 @@ namespace RegistroCitas.BD.Data.Entity
         [Required(ErrorMessage = "El nombre del tipo de documento es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Nombre { get; set; }
+
+        public List<Persona> Personas { get; set; }
     }
 }
