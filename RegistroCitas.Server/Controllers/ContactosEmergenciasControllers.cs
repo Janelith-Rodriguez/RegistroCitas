@@ -51,12 +51,7 @@ namespace RegistroCitas.Server.Controllers
         {
             try //por si existe un error, puedo responder algunas cosas (que me de un entero o resultado de la acticion
             {
-                ////ContactosEmergencia entidad = new ContactosEmergencia();
-                ////entidad.Nombre = entidadDTO.Nombre;
-                ////entidad.Relacion = entidadDTO.Relacion;
-                ////entidad.Telefono = entidadDTO.Telefono;
-                ////entidad.Email = entidadDTO.Email;
-
+              
                 ContactosEmergencia entidad = mapper.Map<ContactosEmergencia>(entidadDTO);
 
                
@@ -65,7 +60,7 @@ namespace RegistroCitas.Server.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-            }
+            } 
         }
 
         [HttpPut("{id:int}")] //api/ContactosEmergencias/2

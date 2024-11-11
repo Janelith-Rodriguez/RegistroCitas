@@ -26,6 +26,8 @@ builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IContactosEmergenciaRepositorio, ContactosEmergenciaRepositorio>();
+builder.Services.AddScoped<ITDocumentoRepositorio, TDocumentoRepositorio>();
+
 //------------------------------------------------------------------------------------------------------
 //construcción de la aplicación
 var app = builder.Build();
