@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RegistroCitas.BD.Data.Entity
 {
-    [Index(nameof(Nombre), Name = "ContactoEmergencia_UQ", IsUnique = true)]
+    [Index(nameof(Nombre), Name = "ContactosEmergencia_UQ", IsUnique = true)]
     public class ContactosEmergencia : EntityBase
     {
 

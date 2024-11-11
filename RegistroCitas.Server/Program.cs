@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RegistroCitas.BD.Data;
+using RegistroCitas.BD.Data.Entity;
+using RegistroCitas.Server.Repositorio;
 using System.Text.Json.Serialization;
 
 //-----------------------------------------------------------------------------------------------------
@@ -22,6 +24,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<IContactosEmergenciaRepositorio, ContactosEmergenciaRepositorio>();
 //------------------------------------------------------------------------------------------------------
 //construcción de la aplicación
 var app = builder.Build();

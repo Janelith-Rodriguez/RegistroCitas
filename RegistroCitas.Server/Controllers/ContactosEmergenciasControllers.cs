@@ -4,33 +4,40 @@ using RegistroCitas.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using RegistroCitas.Shared.DTO;
 using AutoMapper;
+using RegistroCitas.Server.Repositorio;
 
 namespace RegistroCitas.Server.Controllers
 {
+    [ApiController]
+    [Route("api/ContactosEmergencias")]
     public class ContactosEmergenciasControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IContactosEmergenciaRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
-        public ContactosEmergenciasControllers(Context context,
-                                               IMapper mapper)
+        public ContactosEmergenciasControllers(IContactosEmergenciaRepositorio repositorio,
+                                               IMapper mapper) //Context context
         {
-            this.context = context;
+            //this.context = context;
+            this.repositorio = repositorio;
             this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<ContactosEmergencia>>> Get()
         {
-            return await context.ContactosEmergencias.ToListAsync();
+            return await repositorio.Select();
         }
 
 
         [HttpGet("{id:int}")] //api/ContactoEmergencias/2
         public async Task<ActionResult<ContactosEmergencia>> Get(int id)
         {
-            ContactosEmergencia? pepe = await context.ContactosEmergencias
-                .FirstOrDefaultAsync(x => x.Id == id);
+
+            ContactosEmergencia? pepe = await repositorio.SelectById(id);
+                
             if (pepe == null)
             {
                 return NotFound();
@@ -51,9 +58,9 @@ namespace RegistroCitas.Server.Controllers
                 ////entidad.Email = entidadDTO.Email;
 
                 ContactosEmergencia entidad = mapper.Map<ContactosEmergencia>(entidadDTO);
-                context.ContactosEmergencias.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+
+               
+                return await repositorio.Insert(entidad);
             }
             catch (Exception e)
             {
@@ -68,8 +75,7 @@ namespace RegistroCitas.Server.Controllers
             {
                 return BadRequest("Datos Incorrectos");
             }
-            var pepe = await context.ContactosEmergencias.
-                             Where(e => e.Id == id).FirstOrDefaultAsync();
+            var pepe = await repositorio.SelectById(id);
 
             if (pepe == null)
             {
@@ -84,9 +90,9 @@ namespace RegistroCitas.Server.Controllers
 
             try
             {
-                context.ContactosEmergencias.Update(pepe);
-                await context.SaveChangesAsync();
-                return Ok();
+               await repositorio.Update(id, pepe);
+               return Ok();
+
             }
             catch (Exception e)
             {
@@ -97,17 +103,20 @@ namespace RegistroCitas.Server.Controllers
         [HttpDelete("{id:int}")] //api/ContactosEmergencias/2
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.ContactosEmergencias.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             if (!existe)
             {
                 return NotFound($"El tipo de Contacto de emergencia {id} no existe.");
             }
-            ContactosEmergencia EntidadABorrar = new ContactosEmergencia();
-            EntidadABorrar.Id = id;
-
-            context.Remove(EntidadABorrar);
-            await context.SaveChangesAsync();
-            return Ok();
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
     }
 }

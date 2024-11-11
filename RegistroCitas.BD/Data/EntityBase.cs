@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RegistroCitas.BD.Data
 {
-    public class EntityBase
+    public class EntityBase : IEntityBase
     {
         public int Id { get; set; }
         public bool Activo { get; set; }
