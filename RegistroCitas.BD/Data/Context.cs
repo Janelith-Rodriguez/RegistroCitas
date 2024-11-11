@@ -12,7 +12,7 @@ namespace RegistroCitas.BD.Data
     {
         public DbSet<TDocumento> TDocumentos { get; set; }
         public DbSet<Persona> Personas { get; set; }
-        public DbSet<ContactoEmergencia> ContactosEmergencias { get; set; }
+        public DbSet<ContactosEmergencia> ContactosEmergencias { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {

@@ -2,29 +2,34 @@
 using RegistroCitas.BD.Data.Entity;
 using RegistroCitas.BD.Data;
 using Microsoft.EntityFrameworkCore;
+using RegistroCitas.Shared.DTO;
+using AutoMapper;
 
 namespace RegistroCitas.Server.Controllers
 {
     public class ContactosEmergenciasControllers : ControllerBase
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
-        public ContactosEmergenciasControllers(Context context)
+        public ContactosEmergenciasControllers(Context context,
+                                               IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ContactoEmergencia>>> Get()
+        public async Task<ActionResult<List<ContactosEmergencia>>> Get()
         {
             return await context.ContactosEmergencias.ToListAsync();
         }
 
 
         [HttpGet("{id:int}")] //api/ContactoEmergencias/2
-        public async Task<ActionResult<ContactoEmergencia>> Get(int id)
+        public async Task<ActionResult<ContactosEmergencia>> Get(int id)
         {
-            ContactoEmergencia? pepe = await context.ContactosEmergencias
+            ContactosEmergencia? pepe = await context.ContactosEmergencias
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (pepe == null)
             {
@@ -33,11 +38,19 @@ namespace RegistroCitas.Server.Controllers
             return pepe;
         }
 
+
         [HttpPost]
-        public async Task<ActionResult<int>> Post(ContactoEmergencia entidad)
+        public async Task<ActionResult<int>> Post(CrearContactosEmergenciaDTO entidadDTO)
         {
             try //por si existe un error, puedo responder algunas cosas (que me de un entero o resultado de la acticion
             {
+                ////ContactosEmergencia entidad = new ContactosEmergencia();
+                ////entidad.Nombre = entidadDTO.Nombre;
+                ////entidad.Relacion = entidadDTO.Relacion;
+                ////entidad.Telefono = entidadDTO.Telefono;
+                ////entidad.Email = entidadDTO.Email;
+
+                ContactosEmergencia entidad = mapper.Map<ContactosEmergencia>(entidadDTO);
                 context.ContactosEmergencias.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;
@@ -49,7 +62,7 @@ namespace RegistroCitas.Server.Controllers
         }
 
         [HttpPut("{id:int}")] //api/ContactosEmergencias/2
-        public async Task<ActionResult> Put(int id, [FromBody] ContactoEmergencia entidad)
+        public async Task<ActionResult> Put(int id, [FromBody] ContactosEmergencia entidad)
         {
             if (id != entidad.Id)
             {
@@ -89,7 +102,7 @@ namespace RegistroCitas.Server.Controllers
             {
                 return NotFound($"El tipo de Contacto de emergencia {id} no existe.");
             }
-            ContactoEmergencia EntidadABorrar = new ContactoEmergencia();
+            ContactosEmergencia EntidadABorrar = new ContactosEmergencia();
             EntidadABorrar.Id = id;
 
             context.Remove(EntidadABorrar);

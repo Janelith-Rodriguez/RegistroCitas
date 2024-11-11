@@ -27,6 +27,6 @@ namespace RegistroCitas.BD.Data.Entity
         public int TDocumentoId { get; set; }
 
         public TDocumento TDocumento { get; set; }
-        public List<ContactoEmergencia> ContactosEmergencias { get; set; }
+        public List<ContactosEmergencia> ContactosEmergencias { get; set; }
     }
 }

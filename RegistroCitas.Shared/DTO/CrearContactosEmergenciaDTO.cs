@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistroCitas.BD.Data.Entity
+namespace RegistroCitas.Shared.DTO
 {
-    [Index(nameof(Nombre), Name = "ContactoEmergencia_UQ", IsUnique = true)]
-    public class ContactosEmergencia : EntityBase
+    public class CrearContactosEmergenciaDTO
     {
 
         [Required(ErrorMessage = "El nombre del contacto de emergencia es obligatorio.")]
@@ -27,10 +25,5 @@ namespace RegistroCitas.BD.Data.Entity
         [Required(ErrorMessage = "El email del contacto de emergencia es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Email { get; set; }
-
-        //public int PersonaId { get; set; }
-        //public Persona Persona { get; set; }
-
-        //public List<Persona> Personas { get; set; }
     }
 }
