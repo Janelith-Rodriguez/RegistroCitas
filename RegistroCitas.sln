@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegistroCitas.BD", "Registr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistroCitas.Shared", "RegistroCitas.Shared\RegistroCitas.Shared.csproj", "{252D08AB-8CC7-46D0-892C-7212CF1982E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistroCitas.Client", "RegistroCitas.Client\RegistroCitas.Client.csproj", "{888A626C-E26F-4B04-A1A9-A5C0373FDC45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{252D08AB-8CC7-46D0-892C-7212CF1982E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{252D08AB-8CC7-46D0-892C-7212CF1982E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{252D08AB-8CC7-46D0-892C-7212CF1982E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{888A626C-E26F-4B04-A1A9-A5C0373FDC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{888A626C-E26F-4B04-A1A9-A5C0373FDC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{888A626C-E26F-4B04-A1A9-A5C0373FDC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{888A626C-E26F-4B04-A1A9-A5C0373FDC45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
