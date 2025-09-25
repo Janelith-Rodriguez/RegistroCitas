@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RegistroCitas.BD.Data.Entity
 {
-    [Index(nameof(Nombre), Name = "ContactosEmergencia_UQ", IsUnique = true)]
+    
     public class ContactosEmergencia : EntityBase
     {
 
@@ -17,7 +17,7 @@ namespace RegistroCitas.BD.Data.Entity
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "La relación del contacto de emergencia es obligatorio.")]
-        [MaxLength(20, ErrorMessage = "Maximo numero de caracteres{1}.")]
+        [MaxLength(50, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Relacion { get; set; }
 
         [Required(ErrorMessage = "El telefono del contacto de emergencia es obligatorio.")]
@@ -26,11 +26,13 @@ namespace RegistroCitas.BD.Data.Entity
 
         [Required(ErrorMessage = "El email del contacto de emergencia es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Maximo numero de caracteres{1}.")]
+        [EmailAddress(ErrorMessage = "Formato de email no válido.")]
         public string Email { get; set; }
 
-        //public int PersonaId { get; set; }
-        //public Persona Persona { get; set; }
+        [Required(ErrorMessage = "La persona es obligatoria.")]
+        public int PersonaId { get; set; }
+        public Persona Persona { get; set; }
 
-        //public List<Persona> Personas { get; set; }
+        
     }
 }

@@ -4,5 +4,6 @@ namespace RegistroCitas.Server.Repositorio
 {
     public interface IContactosEmergenciaRepositorio : IRepositorio<ContactosEmergencia>
     {
+        Task<ContactosEmergencia> SelectById(int id);
     }
 }

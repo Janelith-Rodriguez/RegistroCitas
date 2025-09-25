@@ -15,7 +15,7 @@ namespace RegistroCitas.Shared.DTO
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "La relación del contacto de emergencia es obligatorio.")]
-        [MaxLength(20, ErrorMessage = "Maximo numero de caracteres{1}.")]
+        [MaxLength(50, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Relacion { get; set; }
 
         [Required(ErrorMessage = "El telefono del contacto de emergencia es obligatorio.")]
@@ -24,6 +24,10 @@ namespace RegistroCitas.Shared.DTO
 
         [Required(ErrorMessage = "El email del contacto de emergencia es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Maximo numero de caracteres{1}.")]
+        [EmailAddress(ErrorMessage = "Formato de email no válido.")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "La persona es obligatoria.")]
+        public int PersonaId { get; set; }
     }
 }

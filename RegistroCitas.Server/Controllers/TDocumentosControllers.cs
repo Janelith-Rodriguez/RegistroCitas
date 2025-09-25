@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 using RegistroCitas.BD.Data;
 using RegistroCitas.BD.Data.Entity;
@@ -7,25 +9,35 @@ using RegistroCitas.Server.Repositorio;
 namespace RegistroCitas.Server.Controllers
 {
     [ApiController]
-    [Route("api/ TDocumentos")]
+    [Route("api/TDocumentos")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TDocumentosControllers : ControllerBase
     {
         
         private readonly ITDocumentoRepositorio repositorio;
+        private readonly IOutputCacheStore outputCacheStore;
 
-        public TDocumentosControllers(ITDocumentoRepositorio repositorio)
+        private const string cacheKey = "TDocumentos";
+
+        public TDocumentosControllers(ITDocumentoRepositorio repositorio,
+            IOutputCacheStore outputCacheStore)
         {
             
             this.repositorio = repositorio;
+            this.outputCacheStore = outputCacheStore;
+           
         }
 
         [HttpGet]
+        [OutputCache(Tags = [cacheKey])]
+        [AllowAnonymous]
         public async Task<ActionResult<List<TDocumento>>>Get()
         {
             return await repositorio.Select();
         }
 
         [HttpGet("GetBycod/{cod}")] //api/TDocumentos/GetByCod/DNI
+        [OutputCache(Tags = [cacheKey])]
         public async Task<ActionResult<TDocumento>>GetByCod(string cod)
         {
             TDocumento? pepe = await repositorio.SelectByCod(cod);
@@ -37,6 +49,7 @@ namespace RegistroCitas.Server.Controllers
         }
 
         [HttpGet("{id:int}")] //api/TDocumentos/2
+        [OutputCache(Tags = [cacheKey])]
         public async Task<ActionResult<TDocumento>> Get(int id)
         {
             TDocumento? pepe = await repositorio.SelectById(id);
@@ -49,6 +62,7 @@ namespace RegistroCitas.Server.Controllers
         }
        
         [HttpGet("existe/{id:int}")]
+        [OutputCache(Tags = [cacheKey])]
         public async Task<ActionResult<bool>>Existe(int id)
         {
              
@@ -61,8 +75,14 @@ namespace RegistroCitas.Server.Controllers
         {
             try //por si existe un error, puedo responder algunas cosas (que me de un entero o resultado de la acticion
             {
-                
-                return await repositorio.Insert(entidad);
+                var id = await repositorio.Insert(entidad);
+                if (id == 0)
+                {
+                    return BadRequest("No se pudo insertar el tipo de documento");
+                }
+                await outputCacheStore.EvictByTagAsync(cacheKey, default);
+
+                return id;
             }
             catch (Exception e)
             {
@@ -85,7 +105,7 @@ namespace RegistroCitas.Server.Controllers
                 {
                     return BadRequest("No se pudo actualizar el tipo de documento.");
                 }
-
+                await outputCacheStore.EvictByTagAsync(cacheKey, default);
                 return Ok();
             }
             catch (Exception e)
@@ -102,6 +122,7 @@ namespace RegistroCitas.Server.Controllers
             if (!resp)
 
             { return BadRequest("El tipo de documento no se pudo borrar"); }
+            await outputCacheStore.EvictByTagAsync(cacheKey, default);
             return Ok();
         }
     }

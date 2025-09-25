@@ -9,6 +9,10 @@ namespace RegistroCitas.Server.Util
         public AutoMapperProfiles()
         {
             CreateMap<CrearContactosEmergenciaDTO, ContactosEmergencia>();
+            
+            //CreateMap<CrearPersonaDTO, Persona>();
+            
+            //CreateMap<CrearTDocumentoDTO, TDocumento>();
         }
         
     }

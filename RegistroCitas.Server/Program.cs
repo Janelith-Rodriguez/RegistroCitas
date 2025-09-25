@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RegistroCitas.BD.Data;
 using RegistroCitas.BD.Data.Entity;
@@ -8,6 +9,10 @@ using System.Text.Json.Serialization;
 //Configuracion de los servicios en el constructor de la aplicacion
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddOutputCache(options =>
+{
+    options.DefaultExpirationTimeSpan= TimeSpan.FromSeconds(60);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews().AddJsonOptions(
@@ -20,6 +25,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().
+    AddEntityFrameworkStores<Context>().
+    AddDefaultTokenProviders();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -43,7 +52,10 @@ app.UseStaticFiles();
 app.MapRazorPages();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseOutputCache();
 
 app.MapControllers();
 app.MapFallbackToFile("index.html");

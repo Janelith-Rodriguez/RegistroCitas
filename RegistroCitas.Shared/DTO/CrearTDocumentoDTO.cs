@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistroCitas.BD.Data.Entity
+namespace RegistroCitas.Shared.DTO
 {
-    [Index(nameof(Codigo), Name = "TDocumento_UQ", IsUnique = true)]
-    public class TDocumento : EntityBase
+    public class CrearTDocumentoDTO
     {
         [Required(ErrorMessage = "El código del tipo de documento es obligatorio.")]
         [MaxLength(10, ErrorMessage = "Maximo numero de caracteres{1}.")]
@@ -18,8 +16,5 @@ namespace RegistroCitas.BD.Data.Entity
         [Required(ErrorMessage = "El nombre del tipo de documento es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Nombre { get; set; }
-
-        //Relacion 1:N con Persona
-        public List<Persona> Personas { get; set; } = new List<Persona>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page "/counter"
-
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "admin")]
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
@@ -11,7 +12,7 @@
 @code {
     private int currentCount = 0;
 
-    private void IncrementCount()
+    private async Task IncrementCount()
     {
         currentCount++;
     }

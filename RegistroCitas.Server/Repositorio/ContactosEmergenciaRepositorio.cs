@@ -12,11 +12,14 @@ namespace RegistroCitas.Server.Repositorio
         {
             this.context = context;
         }
-        //public async Task<ContactosEmergencia> SelectByCod(string cod)
-        //{
-        //    ContactosEmergencia? pepe = await context.ContactosEmergencias
-        //                               .FirstOrDefaultAsync(x => x.Nombre == );
-        //    return pepe;
-        //}
+
+        public async Task<ContactosEmergencia> SelectById(int id)
+        {
+            ContactosEmergencia? pepe = await context.Set<ContactosEmergencia>().AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return pepe;
+        }
+        
     }
 }
