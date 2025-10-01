@@ -2,8 +2,8 @@
 @inject IHttpServicio http
 
 <h3>Lista de Tipos de documentos</h3>
-<br/>
-<a class="btn btn-primary" href="/api/TDocumentos/Crear">Nuevo Tipo de Documento</a>
+<br />
+<a class="btn btn-primary" href="/api/TDocumentos/crear">Nuevo tipo de documento</a>
 <br />
 <table>
     <tr>
@@ -16,7 +16,7 @@
         {
             <p>Buscando....</p>
         }
-        else if(listaDocumentos.Count == 0)
+        else if (listaDocumentos.Count == 0)
         {
             <p>No existen tipos de documentos</p>
         }
@@ -35,7 +35,7 @@
                     </td>
                     <td>
                         <button class="btn btn-danger"
-                           @onclick = "()=>Eliminar(item)">
+                                @onclick="() => Eliminar(item)">
                             Borrar
                         </button>
                     </td>
@@ -54,9 +54,9 @@
               textCancelar="Salir"
               onCancel="Cancelar"
               onConfirm="Borrar">
-              <h5>Está por borrar el tipo de documento</h5>
-              <br />
-              <p>Está seguro?</p>
+    <h5>Está por borrar el tipo de documento</h5>
+    <br />
+    <p>Está seguro?</p>
 </Confirmacion>
 
 
@@ -84,7 +84,8 @@
         }
         else
         {
-            Mensaje = await resp.ObtenerError();
+           
+            Mensaje = resp.ObtenerError();
         }
     }
 

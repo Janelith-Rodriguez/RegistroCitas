@@ -2,7 +2,7 @@
 {
     public class HttpRespuesta<T>
     {
-        public T Respuesta { get; }
+        public T? Respuesta { get; }
 
         public bool Error { get; }
 
@@ -15,7 +15,7 @@
             HttpResponseMessage = httpResponseMessage;
         }
 
-        public async Task<string> ObtenerError()
+        public string ObtenerError()
         {
             if (!Error)
             {
@@ -39,5 +39,6 @@
                     return HttpResponseMessage.Content.ReadAsStringAsync().Result;
             }
         }
+
     }
 }

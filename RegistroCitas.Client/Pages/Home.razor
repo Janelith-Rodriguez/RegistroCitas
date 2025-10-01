@@ -1,25 +1,16 @@
 ﻿@page "/"
 
+<h1>Registro Citas!</h1>
 <PageTitle>Home</PageTitle>
 
 <AuthorizeView>
     <Authorized>
-        <p>Hola @context.User.Identity?.Name</p>
-        <p>Hola@context.User.Identity?.Authenticado</p>
-
-        <p>Hola como estas?, sos un usuario autenticado</p>
-        @foreach (var item in context.User.Claims)
-        {
-            <tr>
-                <td>@item.Value</td>
-            </tr>
-            
-        }
+        <p>Hola @context.User.Identity!.Name</p>
+        <p>Hola como estás, sos un usuario autenticado</p>
     </Authorized>
     <NotAuthorized>
-        <p>Hola no estas autenticado, realiza el login</p>
+        <p>Hola No estás autenticado, realiza el login</p>
     </NotAuthorized>
 </AuthorizeView>
-<h1>Hello, Despensa Raquel!</h1>
 
-Welcome to your new app.
+  

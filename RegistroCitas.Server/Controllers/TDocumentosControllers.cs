@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
+using RegistroCitas.Server.Repositorio;
 using RegistroCitas.BD.Data;
 using RegistroCitas.BD.Data.Entity;
 using RegistroCitas.Server.Repositorio;
@@ -10,7 +12,7 @@ namespace RegistroCitas.Server.Controllers
 {
     [ApiController]
     [Route("api/TDocumentos")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TDocumentosControllers : ControllerBase
     {
         
@@ -22,7 +24,7 @@ namespace RegistroCitas.Server.Controllers
         public TDocumentosControllers(ITDocumentoRepositorio repositorio,
             IOutputCacheStore outputCacheStore)
         {
-            
+             
             this.repositorio = repositorio;
             this.outputCacheStore = outputCacheStore;
            
